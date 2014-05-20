@@ -1,0 +1,14 @@
+
+Fizzbuzz
+  knows that a number is divisible by
+    3
+    5
+  knows that a number is not divisible by
+    3
+    5
+  when playing the game returns
+    1 for the number 1
+    "Fizz" for the number 3
+
+Finished in 0.00309 seconds
+6 examples, 0 failures
