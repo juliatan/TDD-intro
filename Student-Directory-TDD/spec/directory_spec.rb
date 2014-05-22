@@ -86,13 +86,86 @@ end
 
 describe 'Loads a CSV file' do
 
+	it 'checks if user defined CSV file exists' do
+		begin
+			File.delete("test1.csv") # but test.csv doesn't exist
+		rescue 						# hence an error is raised, which we override
+		end
+		load_students("test1.csv")
+	end
+
 	it 'loads user defined CSV file' do
-		expect(CSV).to receive(:foreach).with("students.csv")
-		load_students("students.csv")
+		expect(CSV).to receive(:foreach).with("test2.csv")
+		load_students("test2.csv")
 	end
 
 	it 'converts CSV data into hash format and adds to students list' do
-		load_students("students.csv")
+		load_students("test2.csv")
 		expect(students).to eq [{name: "Julia", cohort: :May, year: 2014}, {name: "John", cohort: :May, year: 2014}]
 	end
 end
+
+describe 'User process menu' do
+
+	# it 'shows the menu of user options' do
+	# 	expect(show_menu).to eq	"1. Input the students\n
+	# 	2. Show the students\n
+	# 	3. Save the list to a filename of your choice\n
+	# 	4. Load the list from a filename of your choice\n
+	# 	9. Exit\n\n"
+	# end
+
+	# let(:user_input) { "1" }
+	# it 'allows user to input students when "1" is entered' do
+	# 	user_input = 1
+ #    	process_menu(user_input).should eq input_student
+	# end
+
+	# it 'correctly passes initial user choice to right process' do
+	# 	stub!(:get_user_input).and_return 1
+	# 	expect(interactive_menu) to ... NO RETURN VALUES!!
+	# end
+
+	it 'lists the students array when "2" is entered' do
+		julia = create_student("Julia")
+		john = create_student("John")
+		add_student(julia)
+		add_student(john)
+		user_input = 2
+		process_menu(user_input).should eq list_students
+	end
+
+end
+
+describe 'Input students option' do
+
+	# it 'asks the user for the names of the students' do
+	# 	expect(input_student).to eq "Please enter the names of the students\nTo finish, just hit return twice."
+	# end
+
+	# it 'ensures that if user inputs name, user is asked for cohort and year' do
+	# 	stub!(:get_name).and_return("Jim", "Jacob",'')
+	# 	stub!(:get_cohort).and_return(":June")
+	# 	stub!(:get_year).and_return(2014)
+	# 	expect(input_student).to eq get_year
+	# end
+
+	it 'ensures that user inputs gets stored to student array correctly' do
+		stub!(:get_name).and_return("Jim", "Jacob",'')
+		stub!(:get_cohort).and_return(:June)
+		stub!(:get_year).and_return 2014
+		input_student
+		expect(students).to eq [{name: "Jim", cohort: :June, year: 2014}, {name: "Jacob", cohort: :June, year: 2014}]
+	end
+end
+
+# describe 'When program is started' do
+
+# 	it 'the interactive menu is loaded' do
+# 		expect self.should receive(:interactive_menu) 
+# 	end
+
+# end
+
+
+
