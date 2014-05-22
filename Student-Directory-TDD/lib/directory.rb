@@ -1,4 +1,3 @@
-
 require 'csv'
 
 def create_student(name, cohort = :May, year = 2014)
@@ -52,11 +51,11 @@ def process_menu(user_input)
 	when 1
 		input_student
 	when 2
-		puts list_students
+		list_students
 	when 3
-		save_students_list(filename)
+		save_students_list(get_save_filename)
 	when 4
-		load_students(filename)
+		load_students(get_load_filename)
 	when 9
 		exit
 	else
@@ -112,9 +111,15 @@ def get_user_input
 	gets.chomp.to_i
 end
 
+def get_save_filename
+	gets.chomp
+end
 
+def get_load_filename
+	gets.chomp
+end
 
-interactive_menu
+#interactive_menu
 
 
 

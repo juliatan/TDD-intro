@@ -82,6 +82,16 @@ describe 'Writes to CSV file' do
 		expect(CSV.readlines("students.csv")).to eq [["Julia", "May", "2014"], ["John", "May", "2014"]]
 	end
 
+	# is this test even necessary?
+	it 'takes user input and passes it as an argument to save method' do
+		begin
+			File.delete("test3.csv") #check file doesn't already exist
+		rescue
+		end
+		stub!(:get_save_filename).and_return("test3.csv")
+		save_students_list(get_save_filename)
+		expect(File.exist?("test3.csv")).to be_true
+	end
 end
 
 describe 'Loads a CSV file' do
@@ -101,6 +111,13 @@ describe 'Loads a CSV file' do
 
 	it 'converts CSV data into hash format and adds to students list' do
 		load_students("test2.csv")
+		expect(students).to eq [{name: "Julia", cohort: :May, year: 2014}, {name: "John", cohort: :May, year: 2014}]
+	end
+
+	# is this even necessary?
+	it 'takes user input and passes it as an argument to load method' do
+		stub!(:get_load_filename).and_return("test2.csv")
+		load_students(get_load_filename)
 		expect(students).to eq [{name: "Julia", cohort: :May, year: 2014}, {name: "John", cohort: :May, year: 2014}]
 	end
 end
@@ -166,6 +183,8 @@ end
 # 	end
 
 # end
+
+
 
 
 
