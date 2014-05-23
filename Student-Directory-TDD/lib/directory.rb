@@ -14,7 +14,7 @@ end
 
 def list_students
 	students.map.with_index do |student, i|
-		puts "#{i+1}. #{student[:name]} (#{student[:cohort]} #{student[:year]})"
+		"#{i+1}. #{student[:name]} (#{student[:cohort]} #{student[:year]})"
 	end.join("\n")
 end
 
@@ -71,7 +71,7 @@ def process_menu(user_input)
 		input_student
 	when 2
 		list_students_header
-		list_students
+		puts list_students
 		list_students_footer
 	when 3
 		save_students_list(get_save_filename)
@@ -171,8 +171,12 @@ end
 
 def list_students_footer
 	puts "\n----------------------------------------"
-	puts "There are a total of #{students.count} students at Makers!"
+	puts "Overall, we have #{students.count} #{pluralisation} at Makers!"
+end
+
+
+def pluralisation
+	students.length == 1 ? "student": "students"
 end
 
 interactive_menu
-

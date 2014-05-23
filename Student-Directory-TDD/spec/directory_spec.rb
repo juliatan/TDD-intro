@@ -14,6 +14,7 @@ describe 'Adding students to the directory' do
 	
 end
 
+# note: in practise, would use BEFORE or LET to generate dummy data and prevent having to repeat this over and over
 describe 'Listing students' do
 
 	it 'array has no data when initialised' do
@@ -136,6 +137,7 @@ end
 
 describe 'User process menu' do
 
+	# I decided not to test this as it only "prints" things out
 	# it 'shows the menu of user options' do
 	# 	expect(show_menu).to eq	"1. Input the students\n
 	# 	2. Show the students\n
@@ -148,12 +150,7 @@ describe 'User process menu' do
 	# let(:user_input) { "1" }
 	# it 'allows user to input students when "1" is entered' do
 	# 	user_input = 1
- #    	process_menu(user_input).should eq input_student
-	# end
-
-	# it 'correctly passes initial user choice to right process' do
-	# 	stub!(:get_user_input).and_return 1
-	# 	expect(interactive_menu) to ... NO RETURN VALUES!!
+ 	#    process_menu(user_input).should eq input_student
 	# end
 
 	it 'lists the students array when "2" is entered' do
@@ -166,7 +163,6 @@ describe 'User process menu' do
 		list_students 
 		list_students_footer
 	end
-
 end
 
 describe 'Input students option' do
@@ -175,6 +171,7 @@ describe 'Input students option' do
 	# 	expect(input_student).to eq "Please enter the names of the students\nTo finish, just hit return twice."
 	# end
 
+	# it is not necessary to check each step in a control flow, only the start and end (see below)
 	# it 'ensures that if user inputs name, user is asked for cohort and year' do
 	# 	stub!(:get_name).and_return("Jim", "Jacob",'')
 	# 	stub!(:get_cohort).and_return(":June")
@@ -186,12 +183,12 @@ describe 'Input students option' do
 		stub!(:get_name).and_return("Jim", "Jacob",'')
 		stub!(:get_cohort).and_return(:June)
 		stub!(:get_year).and_return 2014
-		# allow(self).to receive(:get_cohort).and_return 2014
 		input_student
 		expect(students).to eq [{name: "Jim", cohort: :June, year: 2014}, {name: "Jacob", cohort: :June, year: 2014}]
 	end
 end
 
+# this is not necessary!
 # describe 'When program is started' do
 
 # 	it 'the interactive menu is loaded' do
@@ -199,8 +196,3 @@ end
 # 	end
 
 # end
-
-
-
-
-
