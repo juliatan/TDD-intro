@@ -146,12 +146,10 @@ describe 'User process menu' do
 	# 	9. Exit\n\n"
 	# end
 
-	# no longer relevant - tested below in input students option
-	# let(:user_input) { "1" }
-	# it 'allows user to input students when "1" is entered' do
-	# 	user_input = 1
- 	#    process_menu(user_input).should eq input_student
-	# end
+	it 'when you press 1, it allows you to input students' do
+		expect(self).to receive(:input_student)
+		process_menu(1)
+	end
 
 	it 'lists the students array when "2" is entered' do
 		julia = create_student("Julia")
@@ -163,13 +161,34 @@ describe 'User process menu' do
 		list_students 
 		list_students_footer
 	end
+
+	it 'when you press 3, it allows you to save the students' do
+		expect(self).to receive(:save_students_list)
+		process_menu(3)
+	end
+
+	it 'when you press 4, it allows you to load the students' do
+		expect(self).to receive(:load_students)
+		process_menu(4)
+	end
+
+	it 'when you press 5, it allows you to delete the students' do
+		expect(self).to receive(:delete_student)
+		process_menu(5)
+	end
+
+	it 'when you press 6, it allows you to filter the students' do
+		expect(self).to receive(:filter_students)
+		process_menu(6)
+	end
+
+	it 'when you press 9, it allows you to exit the menu' do
+		expect(self).to receive(:exit)
+		process_menu(9)
+	end
 end
 
 describe 'Input students option' do
-
-	# it 'asks the user for the names of the students' do
-	# 	expect(input_student).to eq "Please enter the names of the students\nTo finish, just hit return twice."
-	# end
 
 	# it is not necessary to check each step in a control flow, only the start and end (see below)
 	# it 'ensures that if user inputs name, user is asked for cohort and year' do

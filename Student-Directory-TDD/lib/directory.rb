@@ -50,7 +50,7 @@ def filter_students(month)
 	end
 	
 	filtered.map.with_index do |student, i| 
-		puts "#{i+1}. #{student[:name]} (#{student[:cohort]} #{student[:year]})"
+		"#{i+1}. #{student[:name]} (#{student[:cohort]} #{student[:year]})"
 	end.join("\n")
 end
 
@@ -80,7 +80,7 @@ def process_menu(user_input)
 	when 5
 		delete_student(get_delete_name)
 	when 6
-		filter_students(get_filter_cohort)
+		puts filter_students(get_filter_cohort)
 	when 9
 		exit
 	else
@@ -179,4 +179,4 @@ def pluralisation
 	students.length == 1 ? "student": "students"
 end
 
-interactive_menu
+# interactive_menu
