@@ -13,8 +13,8 @@ def add_student(student)
 end
 
 def list_students
-	 students.map do |student| # .each will not work here because it doesn't return anything
-		"#{student[:name]} (#{student[:cohort]} #{student[:year]})"
+	students.map.with_index do |student, i|
+		puts "#{i+1}. #{student[:name]} (#{student[:cohort]} #{student[:year]})"
 	end.join("\n")
 end
 
@@ -28,21 +28,40 @@ def save_students_list(filename)
 			line << [student[:name], student[:cohort], student[:year]]
 		end
 	end
+	puts "#{filename} has been saved! What's next?"
 end
 
 def load_students(filename)
-	return nil unless File.exists?(filename) # if filename doesn't exist, exit from method
-	CSV.foreach(filename) do |line|
-		name, cohort, year = line[0], line[1], line[2]
-		students << {name: name, cohort: cohort.to_sym, year: year.to_i}
+	students.clear
+	if File.exists?(filename) # if filename doesn't exist, exit from method
+		CSV.foreach(filename) do |line|
+			name, cohort, year = line[0], line[1], line[2]
+			students << {name: name, cohort: cohort.to_sym, year: year.to_i}
+		end
+		puts "#{filename} has been loaded! What's next?"
+	else
+		puts "This file doesn't exist, pick another option." 
 	end
 end
 
+def filter_students(month)
+	filtered = students.keep_if do |student|
+	 	student[:cohort] == month.to_sym
+	end
+	
+	filtered.map.with_index do |student, i| 
+		puts "#{i+1}. #{student[:name]} (#{student[:cohort]} #{student[:year]})"
+	end.join("\n")
+end
+
 def show_menu
+	puts "\nWelcome to the Makers Academy student directory. Pick an option."
 	puts "\n1. Input the students"
-	puts "2. Show the students"
+	puts "2. Show all of the students"
 	puts "3. Save the list to a filename of your choice"
 	puts "4. Load the list from a filename of your choice"
+	puts "5. Delete a student by name"
+	puts "6. Filter students list by cohort"
 	puts "9. Exit\n\n"
 end
 
@@ -51,11 +70,17 @@ def process_menu(user_input)
 	when 1
 		input_student
 	when 2
+		list_students_header
 		list_students
+		list_students_footer
 	when 3
 		save_students_list(get_save_filename)
 	when 4
 		load_students(get_load_filename)
+	when 5
+		delete_student(get_delete_name)
+	when 6
+		filter_students(get_filter_cohort)
 	when 9
 		exit
 	else
@@ -65,6 +90,7 @@ end
 
 def input_student
 	puts "Please enter the names of the students.\nTo finish, just hit return twice."
+	prompt
 	name = get_name
 
 	while !name.empty? do
@@ -82,8 +108,6 @@ def input_student
 		puts "Anyone else?"
 		name = get_name
 	end
-
-	puts students
 end
 
 def get_name
@@ -108,19 +132,47 @@ def interactive_menu
 end
 
 def get_user_input
+	prompt
 	gets.chomp.to_i
 end
 
 def get_save_filename
+	puts "What filename do you want to save to?"
+	prompt
 	gets.chomp
 end
 
 def get_load_filename
+	puts "What's the name of the filename?"
+	prompt
 	gets.chomp
 end
 
-#interactive_menu
+def get_delete_name
+	puts "Enter the name of the student you want to delete."
+	prompt
+	gets.chomp
+end
 
+def get_filter_cohort
+	puts "Which month do you want to filter by?"
+	prompt
+	gets.chomp
+end
 
+def prompt
+	print ">> "
+end
 
+def list_students_header
+	puts "These are the students at Makers Academy"
+	puts "----------------------------------------\n\n"
+end
+
+def list_students_footer
+	puts "\n----------------------------------------"
+	puts "There are a total of #{students.count} students at Makers!"
+end
+
+interactive_menu
 

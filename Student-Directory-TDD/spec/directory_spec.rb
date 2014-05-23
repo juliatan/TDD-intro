@@ -29,7 +29,7 @@ describe 'Listing students' do
 	it 'array for Julia input data returns "Julia (May 2014)"' do
 		julia = create_student("Julia", :May, 2014)
 		add_student(julia)
-		expect(list_students).to eq "#{julia[:name]} (#{julia[:cohort]} #{julia[:year]})"
+		expect(list_students).to eq "1. #{julia[:name]} (#{julia[:cohort]} #{julia[:year]})"
 	end
 
 	it 'array for more than two students lists two students in the same format"' do
@@ -37,7 +37,7 @@ describe 'Listing students' do
 		john = create_student("John", :May, 2014)
 		add_student(julia)
 		add_student(john)
-		expect(list_students).to eq "#{julia[:name]} (#{julia[:cohort]} #{julia[:year]})\n#{john[:name]} (#{john[:cohort]} #{john[:year]})"
+		expect(list_students).to eq "1. #{julia[:name]} (#{julia[:cohort]} #{julia[:year]})\n2. #{john[:name]} (#{john[:cohort]} #{john[:year]})"
 	end
 
 	it 'assumes students are from May cohort if not specified' do
@@ -122,6 +122,18 @@ describe 'Loads a CSV file' do
 	end
 end
 
+describe 'Filtering function' do
+
+	it 'filters students by month' do
+		julia = create_student("Julia", :May, 2014)
+		john = create_student("John", :June, 2014)
+		add_student(julia)
+		add_student(john)
+		expect(filter_students(:May)).to eq "1. #{julia[:name]} (#{julia[:cohort]} #{julia[:year]})"
+	end
+
+end
+
 describe 'User process menu' do
 
 	# it 'shows the menu of user options' do
@@ -132,6 +144,7 @@ describe 'User process menu' do
 	# 	9. Exit\n\n"
 	# end
 
+	# no longer relevant - tested below in input students option
 	# let(:user_input) { "1" }
 	# it 'allows user to input students when "1" is entered' do
 	# 	user_input = 1
@@ -149,7 +162,9 @@ describe 'User process menu' do
 		add_student(julia)
 		add_student(john)
 		user_input = 2
-		process_menu(user_input).should eq list_students
+		process_menu(user_input).should eq list_students_header
+		list_students 
+		list_students_footer
 	end
 
 end
@@ -171,6 +186,7 @@ describe 'Input students option' do
 		stub!(:get_name).and_return("Jim", "Jacob",'')
 		stub!(:get_cohort).and_return(:June)
 		stub!(:get_year).and_return 2014
+		# allow(self).to receive(:get_cohort).and_return 2014
 		input_student
 		expect(students).to eq [{name: "Jim", cohort: :June, year: 2014}, {name: "Jacob", cohort: :June, year: 2014}]
 	end
