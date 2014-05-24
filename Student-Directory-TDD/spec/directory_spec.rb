@@ -69,6 +69,11 @@ end
 
 describe 'Writes to CSV file' do
 
+	it 'can open a file' do 
+		expect(CSV).to receive(:open).with('students.csv', "w")
+		save_students_list('students.csv')
+	end
+
 	it 'creates a file with a user defined filename' do
 		save_students_list("students.csv")
 		expect(File.exist?("students.csv")).to be_true
