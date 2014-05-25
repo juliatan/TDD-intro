@@ -10,7 +10,7 @@ The aim of this exercise was to develop the FizzBuzz program using TDD. The Fizz
 
 ### How to use FizzBuzz
 
-```irb
+```shell
 require './lib/fizzbuzz'
 fizzbuzz(number)
 ```
@@ -22,7 +22,7 @@ The aim of this exercise was to develop a Roman Numerals converter using TDD. Th
 
 ### How to use Roman Numerals
 
-```irb
+```shell
 require './lib/roman_numerals'
 RomanNumerals.convert(number)
 ```
